@@ -21,6 +21,7 @@
 		<compiler-plugin.version>3.13.0</compiler-plugin.version>
 		<war-plugin.version>3.4.0</war-plugin.version>
 		<wildfly-plugin.version>5.0.1.Final</wildfly-plugin.version>
+		<wildfly-jar-maven-plugin.version>11.0.2.Final</wildfly-jar-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -30,6 +31,28 @@
 			<version>${jakartaee-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Jakarta Enterprise Beans (EJB) -->
+    	<dependency>
+    	    <groupId>jakarta.ejb</groupId>
+    	    <artifactId>jakarta.ejb-api</artifactId>
+    	    <version>4.0.0</version>
+    	    <scope>provided</scope>
+    	</dependency>
+
+		<!-- Hibernate JPA provider -->
+    	<dependency>
+    	    <groupId>org.hibernate.orm</groupId>
+    	    <artifactId>hibernate-core</artifactId>
+    	    <version>6.0.0.Final</version>
+    	</dependency>
+
+    	<!-- MySQL JDBC Driver -->
+    	<dependency>
+    	    <groupId>mysql</groupId>
+    	    <artifactId>mysql-connector-java</artifactId>
+    	    <version>8.0.32</version>
+    	</dependency>
 	</dependencies>
 
 	<build>
@@ -64,12 +87,15 @@
 			<plugin>
     		  <groupId>org.wildfly.plugins</groupId>
     		  <artifactId>wildfly-jar-maven-plugin</artifactId>
+			  <version>${wildfly-jar-maven-plugin.version}</version>
     		  <configuration>
     		    <!-- Donde buscara las extensiones (repositorio) -->
 				<feature-pack-location>wildfly@maven(org.jboss.universe:community-universe)#${wildfly.version}</feature-pack-location>
 				<!-- Especificamos las layers que vamos a utilizar (datasource, jax-rs, jsf, etc) -->
 				<layers>
 					<layer>jaxrs-server</layer>
+					<layer>ejb</layer>
+    				<layer>datasources</layer> <!-- Para conexión con base de datos -->
 				</layers>
     		  </configuration>
     		  <executions>
