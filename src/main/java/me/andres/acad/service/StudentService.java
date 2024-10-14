@@ -1,24 +1,24 @@
 package me.andres.acad.service;
 
 import java.util.List;
-
-import jakarta.ejb.Stateless;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import me.andres.acad.dao.StudentDAO;
 import me.andres.acad.entity.Student;
 
-@Stateless
-public class StudentService {
-    
-    @PersistenceContext(unitName = "myPersistenceUnit")
-    private EntityManager em;
+@ApplicationScoped
+public class StudentService extends GenericServiceImpl<Student, Integer> implements IStudentService {
 
-    public void save(Student s) {
-        em.persist(s);
+    private final StudentDAO dao;
+
+    @Inject
+    public StudentService(StudentDAO dao) {
+        super(Student.class);
+        this.dao = dao;
     }
 
-    public List<Student> findAll() {
-        return em.createQuery("SELECT s FROM Student s", Student.class).getResultList();
+    @Override
+    public StudentDAO getDAO() {
+        return dao;
     }
 }

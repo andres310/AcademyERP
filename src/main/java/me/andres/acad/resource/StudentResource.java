@@ -2,13 +2,10 @@ package me.andres.acad.resource;
 
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import me.andres.acad.entity.Student;
+import me.andres.acad.service.IStudentService;
 import me.andres.acad.service.StudentService;
 
 import java.util.List;
@@ -19,10 +16,10 @@ import java.util.List;
 public class StudentResource {
 
     @Inject
-    private StudentService service;
+    private IStudentService service;
 
     /*@Inject
-    public StudentResource(StudentService service) {
+    public StudentResource(IStudentService service) {
         this.service = service;
     }*/
     
@@ -34,5 +31,16 @@ public class StudentResource {
     @POST
     public void save(Student s) {
         service.save(s);
+    }
+
+    @PUT
+    public void update(Student s) {
+        service.save(s);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public String delete(@PathParam("id") Integer id) {
+        return "deleted";
     }
 }

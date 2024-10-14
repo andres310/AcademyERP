@@ -1,4 +1,4 @@
-package me.andres.jakarta.hello;
+package me.andres.acad;
 
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ApplicationPath;
